@@ -33,12 +33,12 @@ export default class extends React.PureComponent {
             );
         });
     }
-    
+
     isEmailAddress(str) {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(str.toLowerCase());
     }
-    
+
     render() {
         const type_name = 'string';
         const { collapsed } = this.state;
@@ -60,15 +60,15 @@ export default class extends React.PureComponent {
                 );
             }
         }
-        
+
         if (autoLinkStrings) {
             if (valueString.startsWith('http') && valueString.includes('://')) {
-                value = <a href={valueString} target={'_blank'}>{valueString}</a>;
+                value = <a href={valueString} rel="nofollow" target={'_blank'}>{valueString}</a>;
             } else if (this.isEmailAddress(valueString)) {
-                value = <a href={`mailto:${valueString}`}>{valueString}</a>;
+                value = <a href={`mailto:${valueString}`} rel="nofollow">{valueString}</a>;
             } else if (valueString.includes('|href=')) {
                 const tokens = valueString.split('|href=');
-                value = <a href={tokens[1]} target={'_blank'}>{tokens[0]}</a>
+                value = <a href={tokens[1]} target={'_blank'} rel="nofollow">{tokens[0]}</a>
             }
         }
 
