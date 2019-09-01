@@ -63,12 +63,12 @@ export default class extends React.PureComponent {
 
         if (autoLinkStrings) {
             if (valueString.startsWith('http') && valueString.includes('://')) {
-                value = <a href={valueString} rel={'nofollow'} target={'_blank'}>{valueString}</a>;
+                value = <a href={valueString} rel={'nofollow'} >{valueString}</a>;
             } else if (this.isEmailAddress(valueString)) {
                 value = <a href={`mailto:${valueString}`} rel={'nofollow'}>{valueString}</a>;
             } else if (valueString.includes('|href=')) {
                 const tokens = valueString.split('|href=');
-                value = <a href={tokens[1]} rel={'nofollow'} target={'_blank'}>{tokens[0]}</a>
+                value = <a href={tokens[1]} rel={'nofollow'} >{tokens[0]}</a>
             }
         }
 
