@@ -68,7 +68,7 @@ export default class extends React.PureComponent {
                 value = <a href={`mailto:${valueString}`} rel={'nofollow'}>{valueString}</a>;
             } else if (valueString.includes('|href=')) {
                 const tokens = valueString.split('|href=');
-                value = <a href={tokens[1]} rel={'nofollow'} target={'_blank'}>{tokens[0]}</a>
+                value = <a href={tokens[1]} rel={'nofollow'} target={'_blank'} >{tokens[0]}</a>
             }
         }
 
