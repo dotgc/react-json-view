@@ -30,11 +30,16 @@ export default class extends React.PureComponent {
         const container = document.createElement('textarea');
         const { clickCallback, src, namespace } = this.props;
 
-        container.innerHTML = JSON.stringify(
-            this.clipboardValue(src),
-            null,
-            '  '
-        );
+        const clipboardValue = this.clipboardValue(src);
+        if (this.hasJsonStructure(clipboardValue)) {
+            container.innerHTML = JSON.stringify(
+                clipboardValue,
+                null,
+                '  '
+            );
+        } else {
+            container.innerHTML = clipboardValue
+        }
 
         document.body.appendChild(container);
         container.select();
@@ -46,7 +51,7 @@ export default class extends React.PureComponent {
             this.setState({
                 copied: false
             });
-        }, 5500);
+        }, 1000);
 
         this.setState({ copied: true }, () => {
             if (typeof clickCallback !== 'function') {
@@ -79,12 +84,30 @@ export default class extends React.PureComponent {
     clipboardValue = value => {
         const type = toType(value);
         switch (type) {
-        case 'function':
-        case 'regexp':
-            return value.toString();
-        default:
-            return value;
+            case 'function':
+            case 'regexp':
+                return value.toString();
+            default:
+                return value;
         }
+    }
+
+    hasJsonStructure = item => {
+        item = typeof item !== "string"
+            ? JSON.stringify(item)
+            : item;
+
+        try {
+            item = JSON.parse(item);
+        } catch (e) {
+            return false;
+        }
+
+        if (typeof item === "object" && item !== null) {
+            return true;
+        }
+
+        return false;
     }
 
     render() {
